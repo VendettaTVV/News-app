@@ -4,29 +4,29 @@ import Modal from 'react-bootstrap/Modal';
 import noImage from '../dummy-post-horisontal.jpg';
 import Figure from 'react-bootstrap/Figure';
 
-function NewsModal(props) {
+function NewsModal({setShow, show, article}) {
 
-    const handleClose = () => props.setShow(false);
+    const handleClose = () => setShow(false);
 
     return (
         <>
 
-            <Modal size="lg" show={props.show} onHide={handleClose}>
+            <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>{article.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Figure>
                         <Figure.Image
 
                             alt=""
-                            src={noImage}
+                            src={article.urlToImage || noImage}
                         />
                         <Figure.Caption>
-                            URL
+                            {article.url}
                         </Figure.Caption>
                     </Figure>
-                    <p>Content</p>
+                    <p>{article.content}</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

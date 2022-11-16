@@ -31,7 +31,7 @@ function NewsCard({article}) {
                     <small className="text-muted">{moment(article.publishedAd).format('DD.MM.YYYY')}</small>
                 </Card.Footer>
             </Card>
-            <NewsModal show={show} setShow={setShow} />
+            <NewsModal show={show} setShow={setShow} article={article}/>
         </>
     )
 }
