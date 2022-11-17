@@ -22,11 +22,9 @@ function NewsModal({setShow, show, article}) {
                             alt=""
                             src={article.urlToImage || noImage}
                         />
-                        <Figure.Caption>
-                            {article.url}
-                        </Figure.Caption>
                     </Figure>
                     <p>{article.content}</p>
+                    <Button variant="outline-secondary" className="w-100" href={article.url} target="_blank">Read from source</Button>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
