@@ -5,23 +5,36 @@ import Row from 'react-bootstrap/Row';
 import NewsCard from './NewsCard';
 import Button from 'react-bootstrap/Button';
 import FormComponent from './Form';
-import moment from 'moment'
+import {setErrorMessage} from '../Services/stateService'
 import { getEverything } from '../Services/apiServices';
+import {useDispatch} from 'react-redux';
 import './News.scss';
+
 
 function NewsGroupComponent(props) {
     const [show, setShow] = useState(false);
-    const [formResponse, setFormResponse] = useState(null);
+    const [articles, setArticles] = useState([]);
+    
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         (async function () {
-            const response = await getEverything(props);
+            try {
+                const response = await getEverything(props);
             const responseData = await response.json();
-            setFormResponse(responseData);
+            if(responseData.status === 'error') {
+                throw responseData;
+            }
+            setArticles(responseData.articles);
+            } catch(error){
+                dispatch(setErrorMessage(error.message));
+            }
+            
         })();
-    }, []);
+    }, [props, dispatch]);
 
     return (
         <>
@@ -29,7 +42,7 @@ function NewsGroupComponent(props) {
                 Search
             </Button>
             <Row xs={1} md={2} lg={3} className="g-3">
-                {formResponse?.articles.map((article, idx) => (
+                {articles.map((article, idx) => (
                     <Col key={idx}>
                         <NewsCard article={article} />
                     </Col>
@@ -38,21 +51,13 @@ function NewsGroupComponent(props) {
             <FormComponent
                 show={show}
                 handleClose={handleClose}
-                setFormResponse={setFormResponse}
+                setArticles={setArticles}
                 searchProps={props}
             />
         </>
     );
 }
 
-NewsGroupComponent.defaultProps = {
-    q: 'crypto',
-    from: moment().format("YYYY-MM-DDT00:00:00.000"),
-    to: moment().format("YYYY-MM-DDT23:59:59.999"),
-    language: 'en',
-    searchIn: 'title',
-    pageSize: 12,
-    page:1,
-}
+
 
 export default NewsGroupComponent;
