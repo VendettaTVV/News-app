@@ -8,9 +8,9 @@ const initialState = {
 export const setErrorMessage = createAction("setErrorMessage");
 
 const reducer = createReducer(initialState, {
-[setErrorMessage]: (state, action) => {
-    state.errorMessage = action.payload;
-}
+    [setErrorMessage]: (state, action) => {
+        state.errorMessage = action.payload;
+    }
 });
 
-export const store = configureStore({reducer});
+export const store = configureStore({ reducer });

@@ -5,9 +5,9 @@ import Row from 'react-bootstrap/Row';
 import NewsCard from './NewsCard';
 import Button from 'react-bootstrap/Button';
 import FormComponent from './Form';
-import {setErrorMessage} from '../Services/stateService'
+import { setErrorMessage } from '../Services/stateService'
 import { getEverything } from '../Services/apiServices';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './News.scss';
 
 
