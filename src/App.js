@@ -6,11 +6,11 @@ import PaginationComponent from './Footer';
 import HeaderComponent from './Header/Index';
 import ErrorModalComponent from './ErrorModal';
 
-function App(props) {
+function App() {
   return (
     <Container>
       <HeaderComponent />
-      <NewsGroupComponent {...props} />
+      <NewsGroupComponent  />
       <PaginationComponent />
       <ErrorModalComponent  />
     </Container>

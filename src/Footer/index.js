@@ -1,27 +1,26 @@
 
-import { useState } from 'react';
 import Pagination from 'react-bootstrap/Pagination';
-
+import { setPage } from '../Services/stateService';
+import { useDispatch, useSelector } from 'react-redux';
 
 function PaginationComponent() {
-  
-  const [pageStart, setPageStart] = useState(1);
-    
+
+
+  const dispatch = useDispatch();
+
+  const totalResult = useSelector((state) => state.totalResult);
+  const page = useSelector((state) => state.page);
+  const pageSize = useSelector((state) => state.pageSize);
+
+  const totalPages = Math.ceil(totalResult / pageSize);
+
 
   return (
     <Pagination className="mt-4 justify-content-center">
-      
-      <Pagination.Prev onClick={() => setPageStart(pageStart - 1)} 
-      disabled={pageStart === 1}  
-      />
-      
-      <Pagination.Item disabled>{pageStart} / X </Pagination.Item>
 
-      
-      <Pagination.Next onClick={() => setPageStart(pageStart + 1)} 
-      disabled={pageStart === 'X'}
-      />
-      
+      <Pagination.Prev onClick={() => dispatch(setPage(page - 1))} disabled={page <= 1} />
+      <Pagination.Item disabled>{page} / {totalPages} </Pagination.Item>
+      <Pagination.Next onClick={() => dispatch(setPage(page + 1))} disabled={page >= totalPages} />
     </Pagination>
   );
 }

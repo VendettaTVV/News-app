@@ -5,19 +5,19 @@ import Row from 'react-bootstrap/Row';
 import NewsCard from './NewsCard';
 import Button from 'react-bootstrap/Button';
 import FormComponent from './Form';
-import {setErrorMessage} from '../Services/stateService'
+import {setErrorMessage, setTotalResult} from '../Services/stateService'
 import { getEverything } from '../Services/apiServices';
 import {useDispatch, useSelector} from 'react-redux';
 import './News.scss';
 
 
-function NewsGroupComponent(props) {
+function NewsGroupComponent() {
     const [show, setShow] = useState(false);
     const [articles, setArticles] = useState([]);
     
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    const defaultProps = useSelector(state => state)
+    const defaultProps = useSelector(state => state);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,6 +29,7 @@ function NewsGroupComponent(props) {
                 throw responseData;
             }
             setArticles(responseData.articles);
+            dispatch(setTotalResult(responseData.totalResult))
             } catch(error){
                 dispatch(setErrorMessage(error.message));
             }

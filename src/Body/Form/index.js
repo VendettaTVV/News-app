@@ -7,16 +7,18 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { getEverything } from '../../Services/apiServices';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPage } from '../../Services/stateService';
 
 
 function FormComponent({ show, handleClose, setArticles }) {
-    const {q, language, searchIn} = useSelector(state => state)||{};
+    const { q, language, searchIn } = useSelector(state => state) || {};
     const [startDateFrom, setStartDateFrom] = useState(new Date());
     const [startDateTo, setStartDateTo] = useState(new Date());
     const dateFormat = "dd.MM.yyyy";
+    const pageSize = useSelector((state) => state.pageSize);
+    const dispatch = useDispatch();
 
-    
 
 
     const languages = [
@@ -40,6 +42,7 @@ function FormComponent({ show, handleClose, setArticles }) {
             to: moment(startDateTo).format("YYYY-MM-DDT23:59:59.999"),
             language: event.target.language.value,
             searchIn: [...event.target.searchIn].filter(input => input.checked).map(input => input.value).join(','),
+            pageSize,
         };
 
         if (moment(data.from).isAfter(data.to)) {
@@ -50,6 +53,8 @@ function FormComponent({ show, handleClose, setArticles }) {
         const response = await getEverything(data);
         const responseData = await response.json();
         setArticles(responseData.setArticles);
+        dispatch(setPage(1));
+        handleClose();
     };
 
     return (
@@ -61,11 +66,11 @@ function FormComponent({ show, handleClose, setArticles }) {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <Form.Label>Keywords:</Form.Label>
-                        <Form.Control 
-                        type="text" 
-                        name="q" 
-                        placeholder="Enter keyword and phrases"
-                        defaultValue={q}
+                        <Form.Control
+                            type="text"
+                            name="q"
+                            placeholder="Enter keyword and phrases"
+                            defaultValue={q}
                         />
                         <Form.Text className="text-muted">
                             Advanced search is supported here!
@@ -79,7 +84,7 @@ function FormComponent({ show, handleClose, setArticles }) {
                                 type="checkbox"
                                 value={type}
                                 id={`inline-${type}-1`}
-                                defaultChecked = {searchIn.includes(type)}
+                                defaultChecked={searchIn.includes(type)}
                             />
                         </div>
                     ))}
