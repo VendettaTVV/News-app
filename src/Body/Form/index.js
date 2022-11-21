@@ -7,13 +7,16 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { getEverything } from '../../Services/apiServices';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useSelector } from 'react-redux';
 
 
 function FormComponent({ show, handleClose, setArticles, searchProps }) {
-
+    const {q, language, searchIn} = useSelector(state => state)||{};
     const [startDateFrom, setStartDateFrom] = useState(new Date());
     const [startDateTo, setStartDateTo] = useState(new Date());
     const dateFormat = "dd.MM.yyyy";
+
+    
 
 
     const languages = [
@@ -62,7 +65,7 @@ function FormComponent({ show, handleClose, setArticles, searchProps }) {
                         type="text" 
                         name="q" 
                         placeholder="Enter keyword and phrases"
-                        defaultValue={searchProps.q}
+                        defaultValue={q}
                         />
                         <Form.Text className="text-muted">
                             Advanced search is supported here!
@@ -76,7 +79,7 @@ function FormComponent({ show, handleClose, setArticles, searchProps }) {
                                 type="checkbox"
                                 value={type}
                                 id={`inline-${type}-1`}
-                                defaultChecked = {searchProps.searchIn.includes(type)}
+                                defaultChecked = {searchIn.includes(type)}
                             />
                         </div>
                     ))}
@@ -101,7 +104,7 @@ function FormComponent({ show, handleClose, setArticles, searchProps }) {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Select language</Form.Label>
-                        <Form.Select name="language" defaultValue={searchProps.language}>
+                        <Form.Select name="language" defaultValue={language}>
                             {languages.map((lang) => (
                                 <option key={lang.code} value={lang.code}>{lang.label}</option>
                             )
