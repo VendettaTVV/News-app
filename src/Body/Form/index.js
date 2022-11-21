@@ -10,7 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector } from 'react-redux';
 
 
-function FormComponent({ show, handleClose, setArticles, searchProps }) {
+function FormComponent({ show, handleClose, setArticles }) {
     const {q, language, searchIn} = useSelector(state => state)||{};
     const [startDateFrom, setStartDateFrom] = useState(new Date());
     const [startDateTo, setStartDateTo] = useState(new Date());
