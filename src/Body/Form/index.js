@@ -5,14 +5,12 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import { getEverything } from '../../Services/apiServices';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPage } from '../../Services/stateService';
-import {setErrorMessage} from '../../Services/stateService'
+import {setErrorMessage, setSearchParams} from '../../Services/stateService'
 
 
-function FormComponent({ show, handleClose, setArticles }) {
+function FormComponent({ show, handleClose }) {
     const { q, language, searchIn } = useSelector(state => state) || {};
     const [startDateFrom, setStartDateFrom] = useState(new Date());
     const [startDateTo, setStartDateTo] = useState(new Date());
@@ -43,7 +41,7 @@ function FormComponent({ show, handleClose, setArticles }) {
             to: moment(startDateTo).format("YYYY-MM-DDT23:59:59.999"),
             language: event.target.language.value,
             searchIn: [...event.target.searchIn].filter(input => input.checked).map(input => input.value).join(','),
-            pageSize,
+            pageSize, page: 1,
         };
 
         if (moment(data.from).isAfter(data.to)) {
@@ -51,10 +49,8 @@ function FormComponent({ show, handleClose, setArticles }) {
             return;
         }
 
-        const response = await getEverything(data);
-        const responseData = await response.json();
-        setArticles(responseData.setArticles);
-        dispatch(setPage(1));
+    
+        dispatch(setSearchParams(data));
         handleClose();
     };
 

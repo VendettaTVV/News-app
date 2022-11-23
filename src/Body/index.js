@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import NewsCard from './NewsCard';
 import Button from 'react-bootstrap/Button';
 import FormComponent from './Form';
-import {setErrorMessage, setTotalResult} from '../Services/stateService'
+import {setErrorMessage, setTotalResults} from '../Services/stateService'
 import { getEverything } from '../Services/apiServices';
 import {useDispatch, useSelector} from 'react-redux';
 import './News.scss';
@@ -29,7 +29,7 @@ function NewsGroupComponent() {
                 throw responseData;
             }
             setArticles(responseData.articles);
-            dispatch(setTotalResult(responseData.totalResult))
+            dispatch(setTotalResults(responseData.totalResults))
             } catch(error){
                 dispatch(setErrorMessage(error.message));
             }

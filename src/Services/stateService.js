@@ -4,7 +4,7 @@ import moment from 'moment';
 const pageSize = 12;
 const initialState = {
     errorMessage: null,
-    totalResult: pageSize,
+    totalResults: pageSize,
     q: 'crypto',
     from: moment().format("YYYY-MM-DDT00:00:00.000"),
     to: moment().format("YYYY-MM-DDT23:59:59.999"),
@@ -16,7 +16,9 @@ const initialState = {
 
 export const setErrorMessage = createAction("setErrorMessage");
 export const setPage = createAction("setPage");
-export const setTotalResult = createAction("setTotalResult");
+export const setTotalResults = createAction("setTotalResults");
+export const setSearchParams = createAction("setSearchParams");
+
 
 const reducer = createReducer(initialState, {
     [setErrorMessage]: (state, action) => {
@@ -25,8 +27,11 @@ const reducer = createReducer(initialState, {
     [setPage]: (state, action) => {
         state.page = action.payload;
     },
-    [setTotalResult]: (state, action) => {
-        state.setTotalResult = action.payload;
+    [setTotalResults]: (state, action) => {
+        state.totalResults = action.payload;
+    },
+    [setSearchParams]: (state, action) => {
+        state.setSearchParams = action.payload;
     }
 });
 
