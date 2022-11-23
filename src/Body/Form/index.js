@@ -9,6 +9,7 @@ import { getEverything } from '../../Services/apiServices';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPage } from '../../Services/stateService';
+import {setErrorMessage} from '../../Services/stateService'
 
 
 function FormComponent({ show, handleClose, setArticles }) {
@@ -17,8 +18,8 @@ function FormComponent({ show, handleClose, setArticles }) {
     const [startDateTo, setStartDateTo] = useState(new Date());
     const dateFormat = "dd.MM.yyyy";
     const pageSize = useSelector((state) => state.pageSize);
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch(); 
+    
 
 
     const languages = [
@@ -46,7 +47,7 @@ function FormComponent({ show, handleClose, setArticles }) {
         };
 
         if (moment(data.from).isAfter(data.to)) {
-            alert("Wrong data from");
+            dispatch(setErrorMessage("Wrong data from"));
             return;
         }
 
@@ -66,11 +67,11 @@ function FormComponent({ show, handleClose, setArticles }) {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <Form.Label>Keywords:</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="q"
-                            placeholder="Enter keyword and phrases"
-                            defaultValue={q}
+                        <Form.Control 
+                        type="text" 
+                        name="q" 
+                        placeholder="Enter keyword and phrases"
+                        defaultValue={q}
                         />
                         <Form.Text className="text-muted">
                             Advanced search is supported here!
