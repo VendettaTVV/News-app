@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector, useDispatch } from 'react-redux';
-import {setErrorMessage, setSearchParams} from '../../Services/stateService'
+import { setErrorMessage, setSearchParams } from '../../Services/stateService'
 
 
 function FormComponent({ show, handleClose }) {
@@ -16,8 +16,8 @@ function FormComponent({ show, handleClose }) {
     const [startDateTo, setStartDateTo] = useState(new Date());
     const dateFormat = "dd.MM.yyyy";
     const pageSize = useSelector((state) => state.pageSize);
-    const dispatch = useDispatch(); 
-    
+    const dispatch = useDispatch();
+
 
 
     const languages = [
@@ -31,9 +31,18 @@ function FormComponent({ show, handleClose }) {
     function capitalize(str) {
         return str[0].toUpperCase() + str.substring(1);
     };
+    // Sobytija eto vzaimodeistvie megdy polzovatelem i prilogeniem
+    // polzovatel 4toto delset v brausere, brauz lovit etu informaciu i oeredaet nashemy prilogeniu v zavisimosti ot trigerov , prilogenie obrabatyvaet polu4ennye dannye
+    // Trigery eto trigery byvaut raznye, naprimer pri nagatii knopki myshki, nazyvaetsja on-click
+    // Triggery veshautsa na elementy za kotorymi my hotim sledit
+    //Trigery zapuskaut obrabot4iki(obychnye funkcii)
+    //Brauzer peredaet nashim obrabot4ikam polnyi ot4et o deistvii/sobytii v vide ojecta DOM
+    //glavnoe svoistvo etogo ojecta javljaetsa 'target' v kotorom hranitsa informacia ob elemente nad kotorym proizoshlo sobytie
 
     async function handleSubmit(event) {
         event.preventDefault();
+        //PreventDefault eto func zastavlajet brauser prekratit vypolnat izvestnoe emu deistvie etogo sobytija
+        // v nashem slu4ae zastavlyaet otmenit otpravky dannyx na server
 
         const data = {
             q: event.target.q.value,
@@ -49,7 +58,7 @@ function FormComponent({ show, handleClose }) {
             return;
         }
 
-    
+// useParams eto hook react-redux-dom dlya polu4enii iformacii s silky
         dispatch(setSearchParams(data));
         handleClose();
     };
@@ -63,11 +72,11 @@ function FormComponent({ show, handleClose }) {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <Form.Label>Keywords:</Form.Label>
-                        <Form.Control 
-                        type="text" 
-                        name="q" 
-                        placeholder="Enter keyword and phrases"
-                        defaultValue={q}
+                        <Form.Control
+                            type="text"
+                            name="q"
+                            placeholder="Enter keyword and phrases"
+                            defaultValue={q}
                         />
                         <Form.Text className="text-muted">
                             Advanced search is supported here!

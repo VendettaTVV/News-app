@@ -6,9 +6,15 @@ import moment from 'moment';
 
 
 function NewsCard({article}) {
-    
+    // useState eto funkcia/hook kot pomogaet rabotat s sostoyaniem componenta
+    // Sostoyanie eto informaciia, kotoruju component sodergit v sebe
+    // Sostoyanie, kak i lubye dannye mogut menjatsa, pri izmenenii sostoyanija zapuskaetsa novaja otrisovka componenta
+    // U kagdogo sostojanija est svojo izna4alnoe zna4enie i funkcia, kotoaja menajet eto na4alnoe zna4enie
+    // useState prinimaet kak argument izna4alnoe zna4enie sostojaniz i vydaet massiv s 2 zna4enijami: 1 izna4alnoe sostojanie! 2: funkciu dlya izmenenija sostojania 
     const [show, setShow] = useState(false);
     
+    // Card component eto komponent iz npm Paceta React-bootstrap
+    // React-bootstrap eto biblioteka s gotovymi react komponentami napisany s ispolzovaniem bootstrap front-end instrumetami CSS toolkit
     return (
         <>
             <Card onClick={() => setShow(true)}>
