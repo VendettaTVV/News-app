@@ -5,44 +5,60 @@ import Row from 'react-bootstrap/Row';
 import NewsCard from './NewsCard';
 import Button from 'react-bootstrap/Button';
 import FormComponent from './Form';
-import {setErrorMessage, setTotalResults} from '../Services/stateService'
+import { setErrorMessage, setSearchParams, setTotalResults } from '../Services/stateService'
 import { getEverything } from '../Services/apiServices';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, Link } from 'react-router-dom';
 import './News.scss';
 
 
 function NewsGroupComponent() {
     const [show, setShow] = useState(false);
     const [articles, setArticles] = useState([]);
-    
+
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
+    
+    const { q, lang } = useParams();
+
     const defaultProps = useSelector(state => state);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (lang && defaultProps.language !== lang) {
+           dispatch(setSearchParams({
+            ...defaultProps,
+            language: lang,
+           })); 
+           return;
+        }
         (async function () {
             try {
-                const response = await getEverything(defaultProps);
-            const responseData = await response.json();
-            if(responseData.status === 'error') {
-                throw responseData;
-            }
-            setArticles(responseData.articles);
-            dispatch(setTotalResults(responseData.totalResults))
-            } catch(error){
+                
+                const response = await getEverything({
+                    ...defaultProps,
+                    q: q || defaultProps.q
+                });
+                const responseData = await response.json();
+                if (responseData.status === 'error') {
+                    throw responseData;
+                }
+                setArticles(responseData.articles);
+                dispatch(setTotalResults(responseData.totalResults))
+            } catch (error) {
                 dispatch(setErrorMessage(error.message));
             }
-            
+
         })();
-    }, [defaultProps, dispatch]);
+    }, [defaultProps, dispatch, q, lang]);
 
     return (
         <>
             <Button variant="outline-primary" onClick={handleShow} className="mb-3">
                 Search
             </Button>
-            <Row xs={1} md={2} lg={3} className="g-3">
+            <Link to="/bitcoin">Bitcoin today</Link>
+            <Row xs={1} md={2} lg={3} className="g-2">
                 {articles.map((article, idx) => (
                     <Col key={idx}>
                         <NewsCard article={article} />
@@ -53,6 +69,7 @@ function NewsGroupComponent() {
                 show={show}
                 handleClose={handleClose}
                 setArticles={setArticles}
+                searchProps = {defaultProps}
             />
         </>
     );
