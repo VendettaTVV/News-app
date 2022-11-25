@@ -8,9 +8,15 @@ import ErrorModalComponent from './ErrorModal';
 import ContantComponant from './Body/Contact';
 import ContantSchoolComponant from './Body/ContactsSchool';
 import { Routes, Route } from 'react-router-dom';
-
+// Componenty v React eto obychnye JS funkcii kotorye vozvraschaut JSX/React element
 function App() {
+// JSX eto novij sintaksis ot React, kotoryi vozvraschaet s soboi JS i HTML v udobnom vide
+// JSX/React element imeet pravilo: vozvrashaetsia tolko odin element ili component: Odin glavnyi i bezkonecnoe coli4estvo vtorostepennyx
+// V JSX atribut class pereimenovan v ClassName
 
+//React-router DOM eto biblioteka, kotoraja pomogaet nam rabotat so ssylkami
+// kagdii komponent route otvechaet za kakuu nibud ssylky
+// v route my peredaem te komponenty kotorye hotim videt po dannoi v Path property, ssylke
   return (
     <Container>
       <HeaderComponent />

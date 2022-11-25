@@ -18,23 +18,33 @@ function NewsGroupComponent() {
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    
-    const { q, lang } = useParams();
 
+    const { q, lang } = useParams();
+    // useDispatch eto hook react-redux i blagodarja emy my mogem vzaimodeistvovat s react-redux
+    //useDispatch eto most megdu dispatch i redux
+
+// useSelector eto react-redux hook, kotoryi sledit za redux sostoyaniem i pri nali4ii izmenenii zapuskaet otrisovku
     const defaultProps = useSelector(state => state);
     const dispatch = useDispatch();
 
+    // useEffect eto hook, kotoryi zapuskaetsja posle togo kak prvyi render/otrisovka componenta proizoshla
+    // useEffect prinimaet 2 parametra: 1 funkciu, kotoruu nugno zapustiti! 2. massiv iz peremennyh ot kotoryhbudet zaviset dalneishaja rabota useEffect
+    // vse vnesennye peremennya, kotorye my ispolzuem dolgny byt v massive zavisimostei
+    // pri lubyh izmenen zavisim useEffect zapuskaetsa
+    // pri izmenenii v komponente ne kasaushihsja zavisimostei iseEffect ne zapuskaut no component renderitsya
+    //Poetomu s nim lu4he rabotat s zaprosami
+
     useEffect(() => {
         if (lang && defaultProps.language !== lang) {
-           dispatch(setSearchParams({
-            ...defaultProps,
-            language: lang,
-           })); 
-           return;
+            dispatch(setSearchParams({
+                ...defaultProps,
+                language: lang,
+            }));
+            return;
         }
         (async function () {
             try {
-                
+
                 const response = await getEverything({
                     ...defaultProps,
                     q: q || defaultProps.q
@@ -44,6 +54,7 @@ function NewsGroupComponent() {
                     throw responseData;
                 }
                 setArticles(responseData.articles);
+                // Redux destvie neohodimo obernut v dispatch
                 dispatch(setTotalResults(responseData.totalResults))
             } catch (error) {
                 dispatch(setErrorMessage(error.message));
@@ -69,7 +80,7 @@ function NewsGroupComponent() {
                 show={show}
                 handleClose={handleClose}
                 setArticles={setArticles}
-                searchProps = {defaultProps}
+                searchProps={defaultProps}
             />
         </>
     );

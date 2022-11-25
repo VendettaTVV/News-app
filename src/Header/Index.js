@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import Nav from 'react-bootstrap/Nav';
 
 function HeaderComponent() {
+  // Link component pomogaet nam rabotat s sylkami v react prilogenii
+  // Link zapuskaet react-router kotorii v slou o4ered reshaet kakie komponenty pokazyvati
+  //blagodarja Link iroute u nas ne perzagrugaetsa strani4ka a lish renderitsa komponenty
   return (
     <Navbar bg="light" className="mb-5">
       <Container>
