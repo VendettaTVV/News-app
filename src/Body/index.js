@@ -20,19 +20,19 @@ function NewsGroupComponent() {
     const handleClose = () => setShow(false);
 
     const { q, lang } = useParams();
-    // useDispatch eto hook react-redux i blagodarja emy my mogem vzaimodeistvovat s react-redux
-    //useDispatch eto most megdu dispatch i redux
+    // useDispatch it's a hook react-redux and thanks to him we can interact with react-redux
+    // useDispatch is the bridge between dispatch i redux
 
-// useSelector eto react-redux hook, kotoryi sledit za redux sostoyaniem i pri nali4ii izmenenii zapuskaet otrisovku
+    // useSelector it's react-redux hook, who watches over redux state and, if there are changes, starts rendering
     const defaultProps = useSelector(state => state);
     const dispatch = useDispatch();
 
-    // useEffect eto hook, kotoryi zapuskaetsja posle togo kak prvyi render/otrisovka componenta proizoshla
-    // useEffect prinimaet 2 parametra: 1 funkciu, kotoruu nugno zapustiti! 2. massiv iz peremennyh ot kotoryhbudet zaviset dalneishaja rabota useEffect
-    // vse vnesennye peremennya, kotorye my ispolzuem dolgny byt v massive zavisimostei
-    // pri lubyh izmenen zavisim useEffect zapuskaetsa
-    // pri izmenenii v komponente ne kasaushihsja zavisimostei iseEffect ne zapuskaut no component renderitsya
-    //Poetomu s nim lu4he rabotat s zaprosami
+    // useEffect it's a hook, which runs after the first render of the component has occurred
+    // useEffect takes 2 parameters: 1. Function to run  2. An array of variables on which further work will depend useEffect
+    // All the introduced variables that we use must be in the dependency array
+    // Any change in dependency useEffect run
+    // If the changes in the component do not affect dependencies useEffect no run but component render
+    // Therefore, it is better to work with requests
 
     useEffect(() => {
         if (lang && defaultProps.language !== lang) {
@@ -54,7 +54,7 @@ function NewsGroupComponent() {
                     throw responseData;
                 }
                 setArticles(responseData.articles);
-                // Redux destvie neohodimo obernut v dispatch
+                // Redux action must be wrapped in dispatch
                 dispatch(setTotalResults(responseData.totalResults))
             } catch (error) {
                 dispatch(setErrorMessage(error.message));

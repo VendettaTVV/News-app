@@ -5,13 +5,13 @@ import noImage from '../dummy-post-horisontal.jpg';
 import Figure from 'react-bootstrap/Figure';
 
 
-// Kak i lubaja funkcija v JS tak i componenty prinemaut props (properties)
-// component mojet prinjat bezkonechnoe koli4estvo props, no hranit  ih v odnoi peremennoi tipe - ojekt
-// Props peredautsja v component tak ge kak v HTML peredautsja atributy
-//<Component prop1={1} prop2={2}
-// V componente props ne mogut menjatsa
+// Like any function in JS so the components accept props (properties)
+// A component can accept an infinite number props, but stores them in one dash variable - object
+// Props are passed to the component in the same way as in HTML transmitted attributes
+// <Component prop1={1} prop2={2} />
+// In a component props can't change
 
-function NewsModal({setShow, show, article}) {
+function NewsModal({ setShow, show, article }) {
 
     const handleClose = () => setShow(false);
 

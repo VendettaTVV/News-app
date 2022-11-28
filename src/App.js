@@ -8,15 +8,15 @@ import ErrorModalComponent from './ErrorModal';
 import ContantComponant from './Body/Contact';
 import ContantSchoolComponant from './Body/ContactsSchool';
 import { Routes, Route } from 'react-router-dom';
-// Componenty v React eto obychnye JS funkcii kotorye vozvraschaut JSX/React element
+// Components in React it's usual JS func which return JSX/React elements
 function App() {
-// JSX eto novij sintaksis ot React, kotoryi vozvraschaet s soboi JS i HTML v udobnom vide
-// JSX/React element imeet pravilo: vozvrashaetsia tolko odin element ili component: Odin glavnyi i bezkonecnoe coli4estvo vtorostepennyx
-// V JSX atribut class pereimenovan v ClassName
+  // JSX this is the new syntax from React, who brings back JS фтв HTML in a convenient way
+  // JSX/React element has a rule: return only onevelement or component (One main and an infinite number of secondary)
+  // In JSX atribut Class change in ClassName
 
-//React-router DOM eto biblioteka, kotoraja pomogaet nam rabotat so ssylkami
-// kagdii komponent route otvechaet za kakuu nibud ssylky
-// v route my peredaem te komponenty kotorye hotim videt po dannoi v Path property, ssylke
+  // React-router DOM it's a library, shich help us to work with links
+  // Every component route responsible for any link
+  // In route we pass those components that we want to see given in Path property, link
   return (
     <Container>
       <HeaderComponent />

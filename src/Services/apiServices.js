@@ -1,12 +1,12 @@
 const apiUrl = 'https://newsapi.org'
 
-// async funkcia rabotaet s promos/obeschaniami
-// promise eto object, kotoryi izmenitsa v budush4em
-// U promise est 3 sostoyania: 1.Pending/ogidanii - iznachalmoe sostojanie! 2 fuulfilled/vypolnennyi - esli uda4no proshlo! 3 Rejected/otklonennyi - ecli proizoshla oshibka
-// Promis nam nugny, 4tob prilogenie moglo dalche rabotat ne dogidayas otveta
-//klu4evoe slovo await ispolzuetsa tolko v asybu func
-//async vypolnjaetsa v nezavisimosti ot ostalnogo koda
-//await preobragaet oject Promise v otvet ot zaprosa
+// async func work with promises
+// Promise is object, which will change in future
+// promise has 2 states: 1.Pending - initial state 2. Fullfilled - if it went well 3. Rejected - if an error occurs
+// Promise we need, so that the application can continue to work without waiting for a response
+// Key word - await used only in async func
+// async runs independently of the rest of the code
+// await transforms an object Promise in response to a request
 export async function getEverything(data) {
     const params = new URLSearchParams({
         ...data,

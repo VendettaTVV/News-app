@@ -31,18 +31,18 @@ function FormComponent({ show, handleClose }) {
     function capitalize(str) {
         return str[0].toUpperCase() + str.substring(1);
     };
-    // Sobytija eto vzaimodeistvie megdy polzovatelem i prilogeniem
-    // polzovatel 4toto delset v brausere, brauz lovit etu informaciu i oeredaet nashemy prilogeniu v zavisimosti ot trigerov , prilogenie obrabatyvaet polu4ennye dannye
-    // Trigery eto trigery byvaut raznye, naprimer pri nagatii knopki myshki, nazyvaetsja on-click
-    // Triggery veshautsa na elementy za kotorymi my hotim sledit
-    //Trigery zapuskaut obrabot4iki(obychnye funkcii)
-    //Brauzer peredaet nashim obrabot4ikam polnyi ot4et o deistvii/sobytii v vide ojecta DOM
-    //glavnoe svoistvo etogo ojecta javljaetsa 'target' v kotorom hranitsa informacia ob elemente nad kotorym proizoshlo sobytie
+    // Events are the interaction between the user and the application
+    // User does something in browser, browser catches this information and passes it to our application, depending on the triggers, the application processes received data
+    // Triggers are different, for example, when you click on the mouse button is called on-click
+    // Triggers are hung on the elements that we want to monitor
+    // Triggers run handlers (regular functions)
+    // Browsers pass a full action/event report to our handlers as an object DOM
+    // The main property of this object is a target that stores information about the element on which the event occurred
 
     async function handleSubmit(event) {
         event.preventDefault();
-        //PreventDefault eto func zastavlajet brauser prekratit vypolnat izvestnoe emu deistvie etogo sobytija
-        // v nashem slu4ae zastavlyaet otmenit otpravky dannyx na server
+        // PreventDefault - this function causes the browser to stop performing the action it knows about this event
+        // In our case, it forces us to cancel sending data to the server
 
         const data = {
             q: event.target.q.value,
@@ -58,7 +58,7 @@ function FormComponent({ show, handleClose }) {
             return;
         }
 
-// useParams eto hook react-redux-dom dlya polu4enii iformacii s silky
+        // useParams it's a hook react-redux-dom to get a reaction from a link
         dispatch(setSearchParams(data));
         handleClose();
     };

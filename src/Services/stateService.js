@@ -1,14 +1,14 @@
-// Redux eto biblioteka kotoraja pomogaet nam rabotat s sostojaniami componentov
-// Redux eto globalnoe sostojanie prilogenija
-// Redux vzaimodeistvujet tolko s temi komponent, kotorye neobhodimo , ne zatragivaet ostalnyh v cepo4ke
-// eto pomogaet lu4she kontrolirovat otrisovky/render komponentov
-// Redux rabotaet v nezavisimosti ot strukturnogo dereva projecta 
-// @reduxjs/toolkit eto glavnaja biblioteka redux
+// Redux is a library that helps us work with component states
+// Redux global application state
+// Redux interacts only with those components that are needed, does not affect the rest in the chain
+// It helps you have better control render components
+// Redux works regardless of the structural tree of the project
+// @reduxjs/toolkit - main library redux
 import { createAction, createReducer, configureStore } from "@reduxjs/toolkit";
 import moment from 'moment';
 
 const pageSize = 12;
-// peremennaya tip object : izna4alnoe sostojanie
+// Variable object type : initial state
 const initialState = {
     errorMessage: null,
     totalResults: pageSize,
@@ -20,17 +20,19 @@ const initialState = {
     pageSize,
     page: 1,
 };
-// createAction deklarirued dejstvie v Redux
-// Eto deistvie my papuskaem, kogda hotim izmenit sostojanie
+// createAction declares an action in Redux
+// We run this action when we want to change the state
+
 export const setErrorMessage = createAction("setErrorMessage");
 export const setPage = createAction("setPage");
 export const setTotalResults = createAction("setTotalResults");
 export const setSearchParams = createAction("setSearchParams");
 
-// createReduser eto obrsbot4ik deistvia
-//zdes my govorim reduxu 4to my hotim sdelat etim deistviem
-//v nashem slu4ae my zapuskaem sostojanie
-//actio.payload - novaja peredannaja informacia
+// createReduser  is the action handler
+// Here we are talking redux what do we want to do with this action
+// In our case, we start the state
+// action.payload - new transmitted information
+
 const reducer = createReducer(initialState, {
     [setErrorMessage]: (state, action) => {
         state.errorMessage = action.payload;
@@ -45,7 +47,9 @@ const reducer = createReducer(initialState, {
         state.setSearchParams = action.payload;
     }
 });
-// zdes my vse sobiraem vmeste i sozdaem hranilische
+
+// This is where we put it all together and create a store
+
 export const store = configureStore({ reducer });
 
-//Hranilishe my peredaem v component provider ot react-redux biblioteki i oborachivaem ves nash project
+// Store we pass the provider to the component react-redux library and wrap all our project

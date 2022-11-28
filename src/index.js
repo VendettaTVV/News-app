@@ -5,15 +5,15 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 import { store } from './Services/stateService';
 
-// document.GetElementById : берет html element s id root iz DOM (Dociment Object Model).
-// DOM eto vsja structura html v js ojecte
-// DOM hranitsja v globalnoi peremennoi, kotoraja nazyvaetsya 'document'
+// document.GetElementById : takes html element with id root from DOM (Document Object Model).
+// DOM it's all structure html in js object
+// DOM stores in global variable, which calls 'document'
 
-// ReactDom eto vspomogatelnyi paket Reacta dlja vzaimodeistvia s obychnum DOM
-//Create root sozdaet glavnju directoriu gde budet zapuskatsa vsjo nashe prilogenie
+// ReactDom is a support package React to interact with normal DOM
+// createRoot creates the main directory where our entire application will run
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// Render eto funkcija otrisovki React componentov
-// Otrisovka znachit obrabotka componenta i perevodit is JSX ili React component v chistyi DOM
+// Render is a func which renders React compjnents
+// Render means draw components and trnsfer from JSX or React component in clear DOM
 root.render(
     <Provider store={store}>
         <BrowserRouter>
