@@ -7,5 +7,6 @@ export async function getEverything(data) {
         apiKey: process.env.REACT_APP_API_KEY,
 
     });
+    
     return await fetch(`${apiUrl}/v2/everything?${params}`);
 }
