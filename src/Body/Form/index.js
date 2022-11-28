@@ -10,13 +10,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import {setErrorMessage, setSearchParams} from '../../Services/stateService'
 
 
-function FormComponent({ show, handleClose }) {
+function FormComponent({ show, handleClose, articles }) {
     const { q, language, searchIn } = useSelector(state => state) || {};
     const [startDateFrom, setStartDateFrom] = useState(new Date());
     const [startDateTo, setStartDateTo] = useState(new Date());
     const dateFormat = "dd.MM.yyyy";
     const pageSize = useSelector((state) => state.pageSize);
     const dispatch = useDispatch(); 
+    const sources = articles?.map(item => item?.source?.name)
+    console.log(sources);
     
 
 
@@ -103,6 +105,15 @@ function FormComponent({ show, handleClose }) {
                                 dateFormat={dateFormat}
                             />
                         </InputGroup>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Select source</Form.Label>
+                        <Form.Select name="source" >
+                            {sources.map((source) => (
+                                <option key={source} value={source}>{source}</option>
+                            )
+                            )}
+                        </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Select language</Form.Label>

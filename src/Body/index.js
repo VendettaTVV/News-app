@@ -18,7 +18,7 @@ function NewsGroupComponent() {
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    
+
     const { q, lang } = useParams();
 
     const defaultProps = useSelector(state => state);
@@ -26,15 +26,15 @@ function NewsGroupComponent() {
 
     useEffect(() => {
         if (lang && defaultProps.language !== lang) {
-           dispatch(setSearchParams({
-            ...defaultProps,
-            language: lang,
-           })); 
-           return;
+            dispatch(setSearchParams({
+                ...defaultProps,
+                language: lang,
+            }));
+            return;
         }
         (async function () {
             try {
-                
+
                 const response = await getEverything({
                     ...defaultProps,
                     q: q || defaultProps.q
@@ -69,7 +69,8 @@ function NewsGroupComponent() {
                 show={show}
                 handleClose={handleClose}
                 setArticles={setArticles}
-                searchProps = {defaultProps}
+                searchProps={defaultProps}
+                articles={articles}
             />
         </>
     );
