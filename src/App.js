@@ -1,7 +1,7 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import NewsGroupComponent from './Body';
+import BodyComponent from './Body';
 import PaginationComponent from './Footer';
 import HeaderComponent from './Header/Index';
 import ErrorModalComponent from './ErrorModal';
@@ -15,11 +15,11 @@ function App() {
     <Container>
       <HeaderComponent />
       <Routes>
-        <Route path="/" element={<><NewsGroupComponent /><PaginationComponent /></>} />
-        <Route path="/:q" element={<><NewsGroupComponent /><PaginationComponent /></>} />
-        <Route path="/lang/:lang" element={<><NewsGroupComponent /><PaginationComponent /></>} />
-        <Route path="/contact/school" element={<ContantSchoolComponant />} />
-        <Route path="/contact" element={<ContantComponant />} />
+        <Route path="/News-app" element={<><BodyComponent /><PaginationComponent /></>} />
+        <Route path="/News-app/:q" element={<><BodyComponent /><PaginationComponent /></>} />
+        <Route path="/News-app/lang/:lang" element={<><BodyComponent /><PaginationComponent /></>} />
+        <Route path="/News-app/contact/school" element={<ContantSchoolComponant />} />
+        <Route path="/News-app/contact" element={<ContantComponant />} />
       </Routes>
       <ErrorModalComponent />
     </Container>

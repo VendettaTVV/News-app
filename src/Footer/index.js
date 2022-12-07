@@ -1,6 +1,6 @@
 
 import Pagination from 'react-bootstrap/Pagination';
-import { setPage } from '../Services/stateService';
+import { setPage } from '../services/stateService';
 import { useDispatch, useSelector } from 'react-redux';
 
 function PaginationComponent() {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,19 +7,20 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector, useDispatch } from 'react-redux';
-import {setErrorMessage, setSearchParams} from '../../Services/stateService'
+import { setErrorMessage, setSearchParams } from '../../services/stateService';
+import { getSources } from '../../services/apiServices';
 
 
-function FormComponent({ show, handleClose, articles }) {
-    const { q, language, searchIn } = useSelector(state => state) || {};
+function FormComponent({ show, handleClose }) {
+    const { q, language, searchIn, source } = useSelector(state => state) || {};
     const [startDateFrom, setStartDateFrom] = useState(new Date());
     const [startDateTo, setStartDateTo] = useState(new Date());
     const dateFormat = "dd.MM.yyyy";
     const pageSize = useSelector((state) => state.pageSize);
-    const dispatch = useDispatch(); 
-    const sources = articles?.map(item => item?.source?.name)
-    console.log(sources);
-    
+    const dispatch = useDispatch();
+    const [sources, setSources] = useState([]);
+
+
 
 
     const languages = [
@@ -32,7 +33,22 @@ function FormComponent({ show, handleClose, articles }) {
 
     function capitalize(str) {
         return str[0].toUpperCase() + str.substring(1);
-    };
+    }
+
+    useEffect(() => {
+        (async function () {
+            try {
+                const response = await getSources();
+                const responseData = await response.json();
+                if (responseData.status === 'error') {
+                    throw responseData;
+                }
+                setSources(responseData.sources);
+            } catch (error) {
+                dispatch(setErrorMessage(error.message));
+            }
+        })();
+    }, [setSources, dispatch]);
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -44,6 +60,7 @@ function FormComponent({ show, handleClose, articles }) {
             language: event.target.language.value,
             searchIn: [...event.target.searchIn].filter(input => input.checked).map(input => input.value).join(','),
             pageSize, page: 1,
+            sources: event.target.source.value,
         };
 
         if (moment(data.from).isAfter(data.to)) {
@@ -51,7 +68,7 @@ function FormComponent({ show, handleClose, articles }) {
             return;
         }
 
-    
+
         dispatch(setSearchParams(data));
         handleClose();
     };
@@ -65,11 +82,11 @@ function FormComponent({ show, handleClose, articles }) {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <Form.Label>Keywords:</Form.Label>
-                        <Form.Control 
-                        type="text" 
-                        name="q" 
-                        placeholder="Enter keyword and phrases"
-                        defaultValue={q}
+                        <Form.Control
+                            type="text"
+                            name="q"
+                            placeholder="Enter keyword and phrases"
+                            defaultValue={q}
                         />
                         <Form.Text className="text-muted">
                             Advanced search is supported here!
@@ -107,12 +124,12 @@ function FormComponent({ show, handleClose, articles }) {
                         </InputGroup>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Select source</Form.Label>
-                        <Form.Select name="source" >
+                        <Form.Label>Select Source</Form.Label>
+                        <Form.Select name="source" defaultValue={source}>
+                            <option value=""></option>
                             {sources.map((source) => (
-                                <option key={source} value={source}>{source}</option>
-                            )
-                            )}
+                                <option key={source.id} value={source.id}>{source.name}</option>
+                            ))}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3">
